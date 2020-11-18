@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    th {
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
@@ -11,22 +16,11 @@
   <!-- Data Form -->
   <table border="1px" id="list-of-employees">
     <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Age</th>
-      <th>Department</th>
+      <th data-prop="firstName">First Name</th>
+      <th data-prop="lastName">Last Name</th>
+      <th data-prop="age">Age</th>
+      <th data-prop="department">Department</th>
       <th>Actions</th>
-    </tr>
-
-    <tr>
-      <td>Joe</td>
-      <td>Dalh</td>
-      <td>26</td>
-      <td>HR</td>
-      <td>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td>
     </tr>
 
   </table>
