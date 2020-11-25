@@ -1,8 +1,9 @@
 function LocalFormData(form) {
-  this.firstName = form[0].value ? form[0].value : form[0].textContent;
-  this.lastName = form[1].value ? form[1].value : form[1].textContent;
-  this.age = form[2].value ? form[2].value : form[2].textContent;
-  this.department = form[3].value ? form[3].value : form[3].textContent;
+  this.id = form.id
+  this.firstName = form.firstName;
+  this.lastName = form.lastName;
+  this.age = form.age;
+  this.department = form.department;
 
   this.getParamInputField = function(varName) {
     return `<input value="${this[varName]}"/>`;
@@ -16,6 +17,23 @@ function LocalFormData(form) {
         <option value="management">Management</option>
       </select>
     `;
+  },
+  this.getSaveButton = function() {
+    var saveAction = document.createElement("button");
+    saveAction.textContent = `Save`;
+    return saveAction;
+  },
+  this.setDataFromInputs = function(form) {
+    this.firstName = form[0].value;
+    this.lastName = form[1].value;
+    this.age = form[2].value;
+    this.department = form[3].value;
+  },
+  this.setDataFromTableCells = function(form) {
+    this.firstName = form[0].textContent;
+    this.lastName = form[1].textContent;
+    this.age = form[2].textContent;
+    this.department = form[3].textContent;
   }
 }
 
@@ -27,22 +45,18 @@ var getDataFromForm = function (event) {
   // efikasan nacin
   var form = event.currentTarget;
 
-  console.log(form);
-  var data = new LocalFormData(form);
+  var data = new LocalFormData({});
+  data.setDataFromInputs(form);
   console.log(data);
-  // var data = {
-  //   firstName: form[0].value,
-  //   lastName: form[1].value,
-  //   age: form[2].value,
-  //   department: form[3].value,
-  // };
+
   form.reset();
   return data;
 };
 
 var editActionFunc = function (event) {
   var trow = event.currentTarget.parentElement.parentElement;
-  var data = new LocalFormData(trow.children);
+  var data = new LocalFormData({});
+  data.setDataFromTableCells(trow.children);
   // trow.
   console.log(data);
 
@@ -53,8 +67,8 @@ var editActionFunc = function (event) {
   trow.children[3].innerHTML = data.getSelectInputForDepartments();
   trow.children[4].innerHTML = "";
 
-  var saveAction = document.createElement("button");
-  saveAction.textContent = `Save`;
+  var id = parseInt(trow.getAttribute("data-id"));
+  var saveAction = data.getSaveButton();
 
   saveAction.addEventListener("click", function (saveEvent) {
     if (
@@ -63,13 +77,15 @@ var editActionFunc = function (event) {
       trow.children[2].firstChild.value.match(num)
     ) {
       var row = saveEvent.currentTarget.parentElement.parentElement;
-      trow.children[0].innerHTML = trow.children[0].firstChild.value;
-      trow.children[1].innerHTML = trow.children[1].firstChild.value;
-      trow.children[2].innerHTML = trow.children[2].firstChild.value;
-      trow.children[3].innerHTML = trow.children[3].firstChild.nextSibling.value;
-      
-      trow.children[4].appendChild(getEditButton());
-      trow.children[4].appendChild(getDeleteButton());
+      data.id = id;
+      data.firstName = trow.children[0].firstChild.value;
+      data.lastName = trow.children[1].firstChild.value;
+      data.age = trow.children[2].firstChild.value;
+      data.department = trow.children[3].firstChild.nextSibling.value;
+      editRecordFromDb(data);
+      // trow.children[4].innerHTML = '';
+      // trow.children[4].appendChild(getEditButton());
+      // trow.children[4].appendChild(getDeleteButton());
 
     } else {
       alert("Podaci nisu validni");
@@ -116,7 +132,8 @@ var num = /^[1-9][0-9]+$/;
 var addDataIntoTable = function (data) {
   var table = document.getElementById("list-of-employees");
   var row = document.createElement("tr");
-
+  row.classList.add("records");
+  row.setAttribute("data-id", data.id);
   //validation
   if (
     data.firstName.match(letters) &&
@@ -161,7 +178,7 @@ console.log(form);
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   var data = getDataFromForm(event);
-  addDataIntoTable(data);
+  addRecordToDb(data);
 });
 
 var sortTableByColumn = function(event) {
@@ -181,8 +198,9 @@ var sortTableByColumn = function(event) {
   var datObj = [];
 
   for(var tr of tableRowsArray) {
-    
-    datObj.push(new LocalFormData(tr.children));
+    var dataObj = new LocalFormData({});
+    dataObj.setDataFromTableCells(tr.children);
+    datObj.push(dataObj);
 
   }
   datObj.sort(function(a, b) {
@@ -208,7 +226,57 @@ var setEventListenersOnTh = function() {
     thsArray[i].addEventListener("click", sortTableByColumn)
   }
   console.log(ths);
-  debugger;
 }
 setEventListenersOnTh();
 
+
+var addRecordToDb = function(data) {
+  var xhr = new XMLHttpRequest();
+
+  xhr.addEventListener("load", function(response) {
+    // if
+    getDataFromDb();
+  });
+  xhr.open("POST", "http://localhost:9090/workers", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  // debugger;
+  xhr.send(JSON.stringify(data));
+}
+
+var getDataFromDb = function() {
+  var tableRecords = document.querySelectorAll("tr.records");
+  for (var tr of tableRecords) {
+    tr.remove();
+  }
+  var xhr = new XMLHttpRequest();
+
+  xhr.addEventListener("load", function(response) {
+    var workers = JSON.parse(response.currentTarget.response);
+    var localWorkers = workers.map(function(worker) {
+      return new LocalFormData(worker)
+    });
+
+    for(var worker of localWorkers) {
+      addDataIntoTable(worker);
+    }
+  });
+
+  xhr.open("GET", "http://localhost:9090/workers");
+
+  xhr.send();
+}
+
+var editRecordFromDb = function(data) {
+  var xhr = new XMLHttpRequest();
+
+  xhr.addEventListener("load", function(response) {
+    getDataFromDb();
+  });
+
+  xhr.open("PUT", `http://localhost:9090/workers/${data.id}`);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(JSON.stringify(data));
+}
+
+
+getDataFromDb();

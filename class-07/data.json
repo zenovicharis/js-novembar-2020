@@ -1,0 +1,53 @@
+{
+  "workers": [
+    {
+      "firstName": "Omer",
+      "lastName": "Bisevac",
+      "age": "19",
+      "department": "hr",
+      "id": 6
+    },
+    {
+      "firstName": "Milos",
+      "lastName": "Petrovic",
+      "age": "28",
+      "department": "hr",
+      "id": 7
+    },
+    {
+      "id": 8,
+      "firstName": "Muhameddd",
+      "lastName": "Ajanovic",
+      "age": "28",
+      "department": "hr"
+    },
+    {
+      "id": 9,
+      "firstName": "Zerinnn",
+      "lastName": "Ljajicccc",
+      "age": "21",
+      "department": "dev"
+    },
+    {
+      "firstName": "Ajla",
+      "lastName": "Rasljanin",
+      "age": "26",
+      "department": "hr",
+      "id": 10
+    },
+    {
+      "firstName": "Marko",
+      "lastName": "Milenkovic",
+      "age": "27",
+      "department": "management",
+      "id": 11
+    },
+    {
+      "id": 12,
+      "firstName": "Harissssss",
+      "lastName": "Zenovic",
+      "age": "27",
+      "department": "hr"
+    }
+  ]
+}
