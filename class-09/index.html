@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #left {
+            float: left;
+            width: 50%;
+        }
+        #right {
+            float: right;
+            width: 50%;
+        }
+        .clearfix {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div id="left">
+        <!-- Removing element from list -->
+        <div id="list">
+            <ul>
+                <li><a href="">Amazon</a></li>
+                <li><a href="">Facebook</a></li>
+                <li><a href="">Microsoft</a></li>
+                <li><a href="">Apple</a></li>
+            </ul>
+        </div>
+
+        <!-- Modifying elements text content -->
+        <div id="list-mody">
+            <ul>
+                <li><a href="">amazon</a></li>
+                <li><a href="">facebook</a></li>
+                <li><a href="">microsoft</a></li>
+                <li><a href="">apple</a></li>
+            </ul>
+        </div>
+
+
+        <div id="list-mody-input">
+            <input type="text" value="Google">
+            <ul>
+                <li><a href="">amazon</a></li>
+                <li><a href="">facebook</a></li>
+                <li><a href="">microsoft</a></li>
+                <li><a href="">apple</a></li>
+            </ul>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+    <div id="right">
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+    <div>
+        <button onclick="triggerAll()">Trigger All</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
