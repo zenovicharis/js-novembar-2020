@@ -1,3 +1,9 @@
+$("input[name='filter']:checked")
+
+
+
+
+
 $(document).ready(function() {
     $("#form-input").on("submit", function(e) {
         e.preventDefault();
