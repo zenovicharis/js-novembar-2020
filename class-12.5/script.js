@@ -5,17 +5,57 @@ $("input[name='filter']:checked")
 
 
 $(document).ready(function() {
-    $("#form-input").on("submit", function(e) {
-        e.preventDefault();
-        var data = {};
-        $.each(this, function(i, el) {
-            if($(el).attr("id") != undefined) {
-                data[$(el).attr("id")] = $(el).val();
-            }
-        });
-        createNewRow(data);
-        this.reset();
+    $("#form-input").validate({
+        submitHandler: function(form, event) {
+            event.preventDefault();
+            console.log(arguments);
+        },
     });
+
+    var availableTags = [
+        "ActionScript",
+        "AppleScript",
+        "Asp",
+        "BASIC",
+        "C",
+        "C++",
+        "Clojure",
+        "COBOL",
+        "ColdFusion",
+        "Erlang",
+        "Fortran",
+        "Groovy",
+        "Haskell",
+        "Java",
+        "JavaScript",
+        "Lisp",
+        "Perl",
+        "PHP",
+        "Python",
+        "Ruby",
+        "Scala",
+        "Scheme"
+      ];
+      $( "#first-name" ).autocomplete({
+        source: availableTags
+      });
+
+      $("input[name='department']").checkboxradio();
+    
+    
+    // $("#form-input").on("submit", function(e) {
+    //     debugger;
+    //     e.preventDefault();
+    //     var data = {};
+    //     $.each(this, function(i, el) {
+    //         if($(el).attr("id") != undefined) {
+    //             data[$(el).attr("id")] = $(el).val();
+    //         }
+    //     });
+    //     createNewRow(data);
+    //     this.reset();
+    // });
+
 });
 
 const createNewRow = function(data) {
@@ -115,12 +155,12 @@ function toggleActions(tr) {
     }
 }
 
-$.ajax({
-    url: "http://localhost:3000/workers",
-    method: "GET"
-}).done(function(data) {
-    console.log(data);
-});
+// $.ajax({
+//     url: "http://localhost:3000/workers",
+//     method: "GET"
+// }).done(function(data) {
+//     console.log(data);
+// });
 
 
 

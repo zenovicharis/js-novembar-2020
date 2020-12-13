@@ -3,12 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <title>Document</title>
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.js"
-      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-      crossorigin="anonymous"
-    ></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
   <body>
     <h1>CRUD Table jQuery</h1>
@@ -23,27 +22,30 @@
     <form id="form-input">
       <p>
         <label for="first-name">First Name</label>
-        <input type="text" id="first-name" />
+        <input type="text" id="first-name" name="first-name" minlength="2" required/>
       </p>
       <p>
         <label for="last-name">Last Name</label>
-        <input type="text" id="last-name" />
+        <input type="text" id="last-name" name="last-name" minlength="2" required/>
       </p>
       <p>
         <label for="age">Age</label>
-        <input type="text" id="age" />
+        <input type="text" id="age" name="age" required/>
       </p>
       <p>
         <label for="department">Department</label>
-        <select id="department">
-          <option value="hr">HR</option>
-          <option value="dev">Dev</option>
-          <option value="finance">Finance</option>
-          <option value="management">Management</option>
-        </select>
+        <label for="hr">HR</label>
+        <input type="radio" name="department" id="hr">
+        <label for="dev">Dev</label>
+        <input type="radio" name="department" id="dev">
+        <label for="finance">Finance</label>
+        <input type="radio" name="department" id="finance">
+        <label for="management">Management</label>
+        <input type="radio" name="department" id="management">
       </p>
       <p>
-        <button>Submit</button>
+        <input type="submit" value="Submit">
+        <!-- <button type="submit">Submit</button> -->
       </p>
     </form>
 

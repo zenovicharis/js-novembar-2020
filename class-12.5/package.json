@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "jquery-ui": "^1.12.1",
+    "jquery-validation": "^1.19.2"
+  }
+}
