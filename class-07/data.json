@@ -1,13 +1,6 @@
 {
   "workers": [
     {
-      "firstName": "Omer",
-      "lastName": "Bisevac",
-      "age": "19",
-      "department": "hr",
-      "id": 6
-    },
-    {
       "firstName": "Milos",
       "lastName": "Petrovic",
       "age": "28",
@@ -41,13 +34,6 @@
       "age": "27",
       "department": "management",
       "id": 11
-    },
-    {
-      "id": 12,
-      "firstName": "Harissssss",
-      "lastName": "Zenovic",
-      "age": "27",
-      "department": "hr"
     }
   ]
 }

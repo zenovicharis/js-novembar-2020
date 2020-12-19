@@ -90,7 +90,7 @@ main {
 }
 
 .loader {
-	display: flex;
+	display: none;
 	justify-content: center;
 	width: 100%;
 	margin: 25px 0;

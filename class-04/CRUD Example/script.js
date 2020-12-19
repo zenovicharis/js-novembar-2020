@@ -103,7 +103,14 @@ var deleteActionFunc = function (event) {
   var result = window.confirm("Are you sure you want to delete this row ?");
   if (result) {
     var trow = event.currentTarget.parentElement.parentElement;
+    var id = $(trow).attr("data-id");
     trow.remove();
+    $.ajax({
+      url: `http://localhost:9090/workers/${id}`,
+      method: "DELETE"
+    }).done(function() {
+      getDataFromDb()
+    });
   }
 }
 
