@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Department</th>
+            </tr>
+
+            <!-- <template> Dummy element that VueJS ignores and doesn't render -->
+            <template v-for="(employer, i) in employees">
+                <tr v-if="!employer.editMode">
+                    <td>{{i + 1}}</td>
+                    <td>{{employer.firstName}}</td>
+                    <td>{{employer.lastName}}</td>
+                    <td>{{employer.age}}</td>
+                    <td>{{getTextValueOfDepartment(employer.department)}}</td>
+    
+                    <td>
+                        <button @click="edit(i)">Edit</button>
+                        <button @click="remove(i)">Remove</button>
+                    </td>
+                </tr>
+
+
+                <tr v-else>
+                    <td>{{i + 1}}</td>
+                    <td>
+                        <input type="text" v-model="employer.firstName">
+                    </td>
+                    <td>
+                        <input type="text" v-model="employer.lastName">
+                    </td>
+                    <td>
+                        <input type="text" v-model="employer.age">
+                    </td>
+                    <td>
+                        <select v-model="employer.department"> 
+                            <option v-for="deps in departmentOptions" :value="deps.value">{{deps.text}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button @click="saveChanges(i)">Save Changes</button>
+                        <button @click="discardChanges(i)">Discard</button>
+                    </td>
+                </tr>
+            </template>
+
+            <!-- Ugly way of rendering and expensive -->
+            <!-- <tr v-for="(employer, i) in employees">
+                <td  v-if="!employer.editMode">{{i + 1}}</td>
+                <td  v-if="!employer.editMode">{{employer.firstName}}</td>
+                <td  v-if="!employer.editMode">{{employer.lastName}}</td>
+                <td  v-if="!employer.editMode">{{employer.age}}</td>
+                <td  v-if="!employer.editMode">{{employer.department}}</td>
+
+                <td  v-if="!employer.editMode">
+                    <button>Edit</button>
+                    <button v-on:click="remove(i)">Remove</button>
+                </td>
+                <td  v-if="employer.editMode">
+                    <input type="text" v-model="employer.firstName">
+                </td>
+                <td v-if="employer.editMode">
+                    <input type="text" v-model="employer.lastName">
+                </td>
+                <td v-if="employer.editMode">
+                    <input type="text" v-model="employer.age">
+                </td>
+                <td v-if="employer.editMode">
+                    <input type="text" v-model="employer.department">
+                </td>
+                <td v-if="employer.editMode">
+                    <button>Save Changes</button>
+                    <button>Discard</button>
+                </td>
+            </tr> -->
+        </table>
+
+
+
+        <!-- form>p*4>label+input -->
+
+        <form v-on:submit.prevent="add($event)">
+            <p>
+                <label for="first-name">First Name</label>
+                <input type="text" v-model="newEmployee.firstName">
+            </p>
+            <p>
+                <label for="last-name">Last Name</label>
+                <input type="text" v-model="newEmployee.lastName">
+            </p>
+            <p>
+                <label for="age">Age</label>
+                <input type="text" v-model="newEmployee.age">
+            </p>
+            <p>
+                <label for="department">Department</label>
+                <select v-model="newEmployee.department">
+                    <template v-for="deps in departmentOptions">    
+                        <option :value="deps.value">{{deps.text}}</option>
+                    </template>
+                </select>
+            </p>
+            <button type="submit">Add New</button>
+        </form>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="script.js"></script>
+</body>
+</html>
