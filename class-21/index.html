@@ -6,8 +6,26 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Test</h1>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <h1>CRUD Table with DB</h1>
+    <div id="app">
+        <!-- // table -->
+        <app-table
+            :workers="workers"
+            @delete-row="removeRow"
+            @edited-worker="saveEditedWorker"   
+            @revert-worker="revertWorker" 
+        ></app-table>
+
+        <!-- // form  -->
+        <app-form
+            @add-new="saveNewWorker"
+               
+        ></app-form>
+    </div>
+
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
