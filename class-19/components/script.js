@@ -10,6 +10,7 @@ const TodoItem = {
     },
     methods: {
         changeMethod () {
+            this.$emit("changedValue", {})
             // this.$parent.$parent.items
         }
     }
