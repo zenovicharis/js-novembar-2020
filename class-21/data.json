@@ -1,11 +1,11 @@
 {
   "workers": [
     {
-      "name": "Hsaaaaa",
+      "id": 1,
+      "name": "Asd",
       "surname": "asd",
-      "age": "1233",
-      "department": "admin",
-      "id": 2
+      "age": "19",
+      "department": "asdasd"
     }
   ]
 }

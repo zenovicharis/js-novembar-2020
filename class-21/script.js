@@ -27,7 +27,7 @@ const myMixin = {
             })
         },
     }
-  }
+}
 
 
 
@@ -44,6 +44,7 @@ const TableRow = {
                     <button @click="edit">Edit</button>
                     <button @click="remove">Delete</button>
                 </td>
+                <td> {{fullname}}</td>
             </template>
             <template v-else>
                 <td>{{worker.id}}</td>
@@ -63,6 +64,7 @@ const TableRow = {
                     <button v-on:click="saveNewValues">Save Changes</button>
                     <button v-on:click="revertValues">Discard Changes</button>
                 </td>
+                
             </template>
         </tr>    
     `,
@@ -72,6 +74,11 @@ const TableRow = {
         return {
             isEditing: false,
             prevState: {}
+        }
+    },
+    computed: {
+        fullname () {
+            return this.worker.name + " " + this.worker.surname
         }
     },
     methods: {
@@ -136,7 +143,6 @@ const Table = {
                 @edited-worker="editedWorker"
                 @revert-worker="revertWorker">
             </app-table-row>
-            <button v-on:click="refereces">Get Refs</button>  
         </table>  
     `,
     props: ["workers"],
