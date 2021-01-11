@@ -16,9 +16,6 @@ const app = {
                     <button @click="deleteTodo(i)">Delete</button>
                 </li>
 
-                var tip = (totalBil / 100) * {{howWasYourService}}
-                {{totalBill}} + {{tip}}  = {{total}}
-                {{total / numberOfPersons}}
             </ul>
         </p>
     `,
