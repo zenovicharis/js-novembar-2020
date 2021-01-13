@@ -1,16 +1,16 @@
 <template>
     <div>
         <h1>Questions</h1>
-        <div>
+        <div v-if="questionsComputed.length > 0">
             <p v-html="questionsComputed[currentQuestion].question"></p>
             <ul style="list-style-type:none">
                 <li v-for="(suggestion, key) in questionsComputed[currentQuestion].suggestedAnswers" :key="key">
-                    <button @click="submitAnswer(questionsComputed[currentQuestion], suggestion)">{{suggestion}}</button>
+                    <a @click="submitAnswer(questionsComputed[currentQuestion], suggestion)" v-html="suggestion"></a>
                 </li>
             </ul>
             <div>
                 <button @click="currentQuestion--" :disabled="currentQuestion == 0">Back</button>
-                <button @click="currentQuestion++" :disabled="questions.length == (currentQuestion + 1)">Next</button>
+                <button @click="currentQuestion++" :disabled="questionsComputed.length == (currentQuestion + 1)">Next</button>
             </div>
         </div>
     </div>
@@ -21,7 +21,7 @@ export default {
     name: "Questions",
     computed: {
         questionsComputed () {
-            return this.questions.map(q => {
+            return this.localQuestions.map(q => {
                 q.suggestedAnswers = [
                     q['correct_answer'],
                     ...q['incorrect_answers']
@@ -35,27 +35,45 @@ export default {
         return {
             title: "Questions",
             currentQuestion: 0,
-            listOfAnswers: []
+            listOfAnswers: [],
+            localQuestions: [],
         }
     },
     methods: {
         submitAnswer(obj, answer, i) {
-            // this.listOfAnswers.push(obj['correct_answer'] == answer)
-            if (obj['correct_answer'] == answer) {
-                this.listOfAnswers.push(true)
-            } else {
-                this.listOfAnswers.push(false)
+            obj.correctAnswer = obj['correct_answer'] == answer
+            obj.givenAnswer = answer
+            this.listOfAnswers.push(obj);
+            if(this.currentQuestion == (this.localQuestions.length - 1)) {
+                this.currentQuestion = 0;
             }
-            console.log("condition:", i == (this.questions.length - 1), "index", i, "length" ,this.questions.length)
-            if (this.currentQuestion == (this.questions.length - 1)) {
+            this.localQuestions.splice(i, 1);
+            if(this.localQuestions.length == 0) {
                 this.$emit("submitScore", this.listOfAnswers)
-            } else {
-                this.currentQuestion++
             }
         }
     },
+    mounted () {
+        this.localQuestions = [...this.questions];
+    }
 }
 </script>
-<style>
-    
+<style lang="scss">
+    ul {
+        display: flex;
+        justify-content: space-around;
+        li {
+            display: inline-block;
+            > a {
+                display: inline-block;
+                text-decoration: none;
+                color: #fff;
+                background: #000;
+                border: 1px solid blue;
+                padding: 1rem;
+                cursor: pointer;
+            }
+        }
+    }
+    /* li  */
 </style>

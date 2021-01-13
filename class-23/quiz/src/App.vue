@@ -2,6 +2,8 @@
   <img alt="Vue logo" src="./assets/logo.png">
   <Dashboard @submitConfig="getQuestionsForQuiz" v-if="isDashboardState"/>
   <Questions @submitScore="displayScore" :questions="bulkQuestions" v-if="isQuestionState"/>
+  <Score :result="result" v-if="isScoreState" @newGame="setNewGame"/>
+
 
 </template>
 
@@ -9,12 +11,14 @@
 import axios from 'axios'
 import Dashboard from './components/Dashboard.vue'
 import Questions from './components/Questions.vue'
+import Score from './components/Score.vue'
 
 export default {
   name: 'App',
   components: {
     Dashboard,
-    Questions
+    Questions,
+    Score
   },
   computed: {
     isDashboardState () {
@@ -22,36 +26,36 @@ export default {
     },
     isQuestionState () {
       return this.quizState == "questions"
+    },
+    isScoreState () {
+      return this.quizState == "score"
     }
   },
   data() {
     return {
       quizState: "dashboard",
-      bulkQuestions: []
+      bulkQuestions: [],
+      result: []
     }
   },
   methods: {
     getQuestionsForQuiz (config) {
-      console.log(config);
       var self = this
 
-      axios.get(`https://opentdb.com/api.php?amount=${config.numberOfQuestions}&category=${config.category}`).then(response => {
-        self.bulkQuestions = response.data.results
-        this.quizState = "questions"
-        console.log(self.bulkQuestions);
-      })
+      axios.get(`https://opentdb.com/api.php?amount=${config.numberOfQuestions}&category=${config.category}`)
+        .then(response => {
+          self.bulkQuestions = response.data.results
+          this.quizState = "questions"
+        })
     },
     displayScore(answers) {
-      var list = answers.reduce((acc, e) => {
-        if (e) {
-          acc.correct++
-        } else {
-          acc.falseAns++
-        }
-        return acc
-      }, { correct: 0, falseAns: 0});
-
-      alert(`Correct: ${list.correct} False: ${list.falseAns}`);
+      this.result = [...answers];
+      this.quizState = "score";
+    },
+    setNewGame () {
+      this.quizState = "dashboard";
+      this.result = []
+      this.bulkQuestions = []
     }
   },
 }
