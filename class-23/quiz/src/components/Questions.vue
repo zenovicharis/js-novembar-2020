@@ -75,5 +75,4 @@ export default {
             }
         }
     }
-    /* li  */
 </style>
