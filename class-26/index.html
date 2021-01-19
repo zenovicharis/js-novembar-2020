@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{title}}</h1>
+        <p>
+            <button v-for="(tab, i) in tabs" :key="i" @click="setComponent(tab)">{{tab}}</button>
+        </p>
+        <p>
+            <!-- Dynamic Component Loading -->
+            <component :is="quizState"></component>
+        </p>
+    </div>
+
+    <div id="app-slots">
+        <h1>{{mainTitle}}</h1>
+        <inner-component>
+            <template v-slot:title>
+                Hey I'm in Title
+            </template>
+
+            <template v-slot:subtitle>
+                <strong><i>This is displayed in inner component</i></strong>
+            </template>
+        </inner-component>
+    </div>
+
+    <div id="app-provide">
+        <h1>{{mainTitle}}</h1>
+        <child-component></child-component>
+    </div>
+
+    <script src="vuejs.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

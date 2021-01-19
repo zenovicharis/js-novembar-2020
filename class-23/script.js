@@ -14,6 +14,15 @@ var newNiz = [
 
 var [num, ...rest] = numbers;
 
+const Vue = {
+    createApp: function () {...Vue.},
+    defineAsyncComponent: function () {},
+    title: "asdasdasd",
+}
+
+const {title} = Vue
+console.log(title);
+
 
 console.log(num, rest);
 
