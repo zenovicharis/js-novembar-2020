@@ -1,0 +1,43 @@
+<h1>Welcome to Angular</h1>
+<table border="1">
+  <th>Name</th>
+  <th>Surname</th>
+  <th>Age</th>
+  <th>Department</th>
+  <th>Action</th>
+  <tr *ngFor="let worker of workers; index as i">
+    <td>{{worker.name}}</td>
+    <td>{{worker.surname}}</td>
+    <td>{{worker.age}}</td>
+    <td>{{worker.department}}</td>
+    <td>
+      <button>Edit</button>
+      <button (click)="deleteWorkerOnIndex(i)">Delete</button>
+    </td>
+  </tr>
+
+</table>
+<!-- <app-sub [someValue]="localWorker.name"></app-sub> -->
+
+<!-- <form (ngSubmit)="submitForm()"> -->
+  <p>
+    <label for="">Name:</label>
+    <input type="text" [value]="localWorker.name" (input)="localWorker.name=$event.target.value">
+  </p>
+  <p>
+    <label for="">Surname</label>
+    <input type="text" [value]="localWorker.surname" (input)="localWorker.surname=$event.target.value">
+  </p>
+  <p>
+    <label for="">Age</label>
+    <input type="number" [value]="localWorker.age" (input)="localWorker.age=$event.target.value">
+  </p>
+  <p>
+    <label for="">Department</label>
+    <input type="text" [value]="localWorker.department" (input)="localWorker.department=$event.target.value">
+  </p>
+  <p>
+    <button (click)="submitForm()">Submit</button>
+  </p>
+<!-- </form> -->
+
